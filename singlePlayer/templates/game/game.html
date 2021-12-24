@@ -1,0 +1,138 @@
+{% extends 'game/layout.html' %}
+{% load static %}
+{% block title %}Game{% endblock title %}
+
+{% block body %}
+<div class="container" id="game_div">
+
+    <!--
+        Placing User's generals
+    -->
+    <div class="row g-0" id="user-generals">
+        {% for general in user_generals %}
+        {% if general.life > 0 %}
+        <div class='col' id="div{{ general.id }}">
+            <h6 id="ms{{ general.id }}" style="opacity: 0;"></h6>
+            <img src='{{ general.cap_image_url }}' alt="{{ general.name }}'s photo" class='user-generals-photo army us'
+                id='{{ general.id }}' data-general="{{ general.id }}">
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+
+    <!--
+        Placing tree 
+    -->
+    <div class="row g-0">
+        {% for num in count %}
+        <img src="http://clipart-library.com/newimages/tree-clip-art-23.png" class="tree" alt="tree photo">
+        {% endfor %}
+    </div>
+
+
+    <!--
+        Placing User's soldiers
+    -->
+    <div class="row g-0" id="user-army">
+        {% for soldier in user_soldiers %}
+        {% if soldier.life > 0 %}
+        <div class="col" id="div{{ soldier.id }}">
+            <h6 id="ms{{ soldier.id }}" style="opacity: 0;"></h6>
+            <img src='{{ soldier.helmet_image_url }}' alt="{{ soldier.id }}'s photo" class='user-soldiers-photo army us'
+                id='{{ soldier.id }}' data-soldier="{{ soldier.id }}">
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+
+    <!--
+        Placing tree 
+    -->
+    <div class="row g-0">
+        {% for num in count %}
+        <img src="http://clipart-library.com/newimages/tree-clip-art-23.png" class="tree" alt="tree photo">
+        {% endfor %}
+    </div>
+
+
+    <!--
+        Showing User and Opponent's score
+    -->
+    <div class="row g-0" id="score-card">
+        <span id="user-score">{{ user.team.name }}'s score:<b id="u-score">{{ user_score }}</b></span>
+        <span id="op-score">{{ op_army.team.name }}'s score:<b id="o-score">{{ op_score }}</b></span>
+        <h1 style="text-align: center;" id="wl"></h1>
+    </div>
+
+
+    <!--
+        Placing tree 
+    -->
+    <div class="row g-0">
+        {% for num in count %}
+        <img src="http://clipart-library.com/newimages/tree-clip-art-23.png" class="tree" alt="tree photo">
+        {% endfor %}
+    </div>
+
+
+    <!--
+        Placing opponent's soldiers
+    -->
+    <div class="row g-0" id="opponent-army">
+        {% for op_soldier in op_soldiers %}
+        {% if op_soldier.life > 0 %}
+        <div class="col" id="div{{ op_soldier.id }}">
+            <h6 id="ms{{ op_soldier.id }}" style="opacity: 0;"></h6>
+            <img src='{{ op_soldier.helmet_image_url }}' data-soldier="{{ op_soldier.id }}"
+                alt="{{ op_soldier.id }}'s photo" class='op-soldiers-photo army op' id='{{ op_soldier.id }}'>
+
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+
+    <!--
+        Placing tree 
+    -->
+    <div class="row g-0">
+        {% for num in count %}
+        <img src="http://clipart-library.com/newimages/tree-clip-art-23.png" class="tree" alt="tree photo">
+        {% endfor %}
+    </div>
+
+
+    <!--
+        placing Opponent's generals
+    -->
+    <div class="row g-0" id="opponent-generals">
+        {% for op_general in op_generals %}
+        {% if op_general.life > 0 %}
+        <div class="col" id="div{{ op_general.id }}">
+            <h6 id="ms{{ op_general.id }}" style="opacity: 0;"></h6>
+            <img src='{{ op_general.cap_image_url }}' data-general="{{ op_general.id }}"
+                alt="{{ op_general.name }}'s photo" class='op-generals-photo army op' id='{{ op_general.id }}'>
+
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <br>
+    <br>
+
+
+    <!--
+        Restart Game button
+    -->
+    <a href="{% url 'restart' %}" class="btn btn-danger">Restart</a>
+    <a href="{% url 'progress' %}" id="next" style="display: none;" class="btn btn-success">Next</a>
+</div>
+
+
+{% endblock body %}
+{% block script %}
+<link rel="stylesheet" href="{% static 'css/game.css' %}">
+<script src="{% static 'JSbundle/game.js' %}"></script>
+{% endblock script %}

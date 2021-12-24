@@ -1,0 +1,56 @@
+{% extends 'game/layout.html' %}
+{% load static %}
+{% block title %}Cabinet{% endblock title %}
+{% block body %}
+
+
+
+
+
+
+
+<div class="container">
+    <h2>General Cap</h2><br>
+    <div class="row">
+        {% for product in products %}
+        {% if product.category == 'Cap' %}
+        <div class="card product" style="width: 18rem;">
+            <img class="card-img-top" src="{{ product.image_url }}" alt="{{ product.name }}'s photo">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <b class="card-text">${{ product.price }}</b><br><br>
+                <a href="{% url 'cap_buy' product.id %}" class="btn btn-danger">Buy</a>
+            </div>
+        </div>
+
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<div class="row">
+    <br><br><br>
+</div>
+<div class="container">
+    <h2>Soldier Helmet</h2><br>
+    <div class="row">
+        {% for product in products %}
+        {% if product.category == 'Helmet' %}
+        <div class="card product" style="width: 18rem;">
+            <img class="card-img-top" src="{{ product.image_url }}" alt="{{ product.name }}'s photo">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <b class="card-text">${{ product.price }}</b><br><br>
+                <a href="{% url 'helmet_buy' product.id %}" class="btn btn-danger">Buy</a>
+            </div>
+        </div>
+
+        {% endif %}
+        {% endfor %}
+
+    </div>
+
+
+    {% endblock %}
+    {% block script %}
+    <script src="{% static 'JSbundle/cabinet.js' %}"></script>
+    {% endblock script %}

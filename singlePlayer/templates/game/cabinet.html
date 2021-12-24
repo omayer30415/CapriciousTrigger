@@ -1,0 +1,74 @@
+{% extends 'game/layout.html' %}
+{% load static %}
+{% block title %}Cabinet{% endblock title %}
+{% block body %}
+
+<div class="container" id="generals_cabinet">
+    <div class='row'>
+
+
+    </div>
+    <div class="row">
+        <div class="col"><br>
+            <h2 class="title">Generals</h2>
+            <ul id="generals">
+                {% for general in generals %}
+                <li class="general_names" data-general="{{ general.id }}">{{ general.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col" id="attributes"></div>
+        <div class="col"><br><br>
+            <ul>
+
+                {% if soldiers %}
+                <h2 class="title">Promotional troops</h2>
+                {% for soldier in soldiers %}
+                <li class="soldier_ids">Soldier ID: {{ soldier.id }}
+                    <br>Killed Soldier: {{ soldier.killed_units }}
+                    <button class="btn btn-success promote" data-promote="{{ soldier.id }}">Give promotion</button>
+                </li>
+                <form style="display: none;" id="fr{{ soldier.id }}">
+                    <input type='hidden' id="hd{{ soldier.id }}" value="{{ soldier.killed_units }}">
+                    <label for="soldier_name" class="soldier_name">Give a name:</label><br>
+                    <input type="text" name="soldier_name" class="form-control" id="name{{ soldier.id }}"><br>
+                    <label for="cap_image_url" class="soldier_url">Give an image url of a military cap:</label><br>
+                    <input type="url" name="cap_image_url" class="form-control" id="cap{{ soldier.id }}"><br>
+                    <h6>Use the default image url. To do that,right-click on a general's cap image, copy the address of
+                        the cap image
+                        and paste it.</h6>
+
+                    <button class="btn btn-success" id='promote{{ soldier.id }}'
+                        data-promotion="{{ soldier.id }}">Promote</button>
+                </form>
+                {% empty %}
+                <li class="general_attributes">No soldier is eligible for promotion</li>
+                {% endfor %}
+                {% endif %}
+
+
+
+
+
+
+            </ul>
+
+        </div>
+        <div class="col">
+            <br><br><br><br><br><br>
+            <a href="{% url 'game' %}" class="btn btn-danger" id="start">Start Game</a>
+            {% if opponent %}
+            <a href="{% url 'con' %}" class="btn btn-danger" id="con">Continue</a>
+            {% endif %}
+            <a href="{% url 'shop' %}" class="btn btn-success" id="shop">Go to Shop</a>
+        </div>
+        <br><br>
+
+
+    </div>
+</div>
+{% endblock body %}
+{% block script %}
+<link rel="stylesheet" href="{% static 'css/cabinet.css' %}">
+<script src="{% static 'JSbundle/cabinet.js' %}"></script>
+{% endblock script %}

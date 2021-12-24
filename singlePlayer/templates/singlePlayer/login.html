@@ -1,0 +1,29 @@
+{% extends 'singlePlayer/layout.html' %}
+{% block title %}Sign In{% endblock %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+            <div class="main">
+                <form action="{% url 'login' %}" method="POST">
+                    <h1 class="headers">Login</h1>
+                    {% csrf_token %}
+                    <label for="username">Username:</label><br>
+                    <input type="text" name="username" class="form-control" id="id_username"><br>
+                    <label for="password">Password:</label><br>
+                    <input type="password" name="password" class="form-control" id="id_password"><br>
+                    <input type="submit" class="btn btn-danger submit_button" value="Sign In">
+                </form>
+            </div>
+        </div>
+        <div class="col-sm">
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

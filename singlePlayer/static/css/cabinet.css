@@ -1,0 +1,117 @@
+.general_image {
+    text-align: center;
+    width: 70%;
+}
+
+.general_names, .general_attributes, .soldier_ids {
+    font-size: 24px;
+    font-weight: bold;
+    color: blueviolet
+}
+
+.general_names {
+    font-size: 30px;
+    
+}
+#generals {
+    padding-left: 10%;
+}
+.title {
+    text-transform: uppercase;
+    font-weight: bolder;
+    color: blueviolet
+}
+
+.soldier_name, .soldier_url {
+    font-weight: bold;
+    font-size: 20px;
+}
+.general_names:hover {
+    color:red;
+    cursor: pointer;
+}
+
+.soldier_name, .soldier_url,
+ .title,.general_names,
+  .general_attributes, .soldier_ids {
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+.user-attr {
+    margin-left: 2%;
+    margin-right: 2%;
+    font-size: 24px;
+    font-weight: bold;
+    font-family:'Nanum Gothic', sans-serif; 
+}
+
+.top_link:hover  {
+    color: red;
+}
+#start {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    
+    font-size: 20px;
+    vertical-align: middle;
+    text-align: center;
+}
+.attr {
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px 8px rgba(0, 0, 0, 0.15);
+    padding-left: 5%;
+    width: 300px;
+}
+#shop {
+    width: 100px;
+    height: 100px;
+    float: left;
+    text-align: center;
+    padding-right: 10%;
+}
+#shop,#start {
+    border: 0px !important;
+    margin:3%;
+}
+@media screen and (max-width:490px) {
+    #start {
+        padding-top: 30%;
+    }
+    #shop {
+        padding-top: 30%;
+    }
+}
+@media screen and (min-width:491px){
+    #start {
+        padding-top: 18%;
+    }
+    #shop {
+        padding-top: 18%;
+    }
+}
+@media screen and (min-width:500px){
+    #start {
+        padding-top: 8%;
+    }
+    #shop {
+        padding-top: 8%;
+    }
+}
+@media screen and (min-width:775px) {
+    #start {
+        padding-top: 18%;
+    }
+    #shop {
+        padding-top: 15%;
+    }
+}
+
+.product {
+    margin: 2%;
+    
+}
+.product:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

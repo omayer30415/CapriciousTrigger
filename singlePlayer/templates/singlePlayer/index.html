@@ -1,0 +1,47 @@
+{% extends 'singlePlayer/layout.html' %}
+{% block title %}Capricious Trigger{% endblock %}
+{% load static %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+            <h1 class="headers game_head">Capricious Trigger</h1>
+            <div class="main">
+                {% if user.is_authenticated %}
+
+                {% if user.team %}
+                <a href="{% url 'cabinet' %}" style="text-decoration: none;">
+                    <h4 class=" game_options">Continue</h4>
+                </a>
+                {% endif %}
+
+                <a href="{% url 'choose' %}" style="text-decoration: none;">
+                    <h4 class=" game_options">New Game</h4>
+                </a>
+                <a href="{% url 'credits' %}" style="text-decoration: none;">
+                    <h4 class=" game_options">Credits</h4>
+                </a>
+
+                <a href="{% url 'logout' %}" style="text-decoration: none;">
+                    <h4 class="game_options">Sign Out</h4>
+                </a>
+                {% else %}
+                <a href="{% url 'login' %}" style="text-decoration: none;">
+                    <h4 class="game_options">Sign In</h4>
+                </a>
+                <a href="{% url 'register' %}" style="text-decoration: none;">
+                    <h4 class="game_options">Sign Up</h4>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-sm">
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script></script>
+{% endblock script %}
