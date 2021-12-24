@@ -111,7 +111,7 @@ def new_choose(request, team_id):
     generals = General.objects.filter(team=team_id)
     for general in generals:
         user_general = General.objects.create(
-            name=general.name, cap_image_url=general.cap_image_url, commander=user)
+            name=general.name, cap_image_url=general.cap_image_url, commander=user, leading_role=general.leading_role)
         user_general.save()
     soldiers = create_soldiers(team_name=user.team.name, amount=20)
     for soldier in soldiers:
