@@ -16,7 +16,7 @@ $(document).ready(function () {
             }
         })
 
-    // If user clicks on any of his general
+    // If user selects any of his general
     document.querySelectorAll('.user-generals-photo').forEach((general) => {
         $(general).click(function () {
             document.querySelectorAll('.army').forEach((a) => {
@@ -33,7 +33,7 @@ $(document).ready(function () {
         });
     })
 
-    // Is user clicks on any of his soldier
+    // Is user selects on any of his soldier
     document.querySelectorAll('.user-soldiers-photo').forEach((soldier) => {
         $(soldier).click(function () {
             document.querySelectorAll('.army').forEach((a) => {
@@ -62,7 +62,6 @@ $(document).ready(function () {
                 sessionStorage.setItem('df_id', op_general_id)
                 const general_id = sessionStorage.getItem('ugn_id')
                 const soldier_id = sessionStorage.getItem('usd_id')
-                console.log(op_general_id)
 
                 // If the attacker is user's general and defender is opponent general
                 if ((sessionStorage.getItem('ugn_id') != null) && (sessionStorage.getItem('usd_id') == null)) {
@@ -74,7 +73,6 @@ $(document).ready(function () {
                     })
                         .then((response1) => response1.json())
                         .then((result1) => {
-                            console.log(result1.message)
                             shot_animation(op_general_id, op_general, result1)
                             op_attack()
                         })
@@ -89,7 +87,6 @@ $(document).ready(function () {
                     })
                         .then((response1) => response1.json())
                         .then((result1) => {
-                            console.log(result1.message)
                             shot_animation(op_general_id, op_general, result1)
                             op_attack()
                         })
@@ -108,7 +105,6 @@ $(document).ready(function () {
                 const op_soldier_id = sessionStorage.getItem('df_id')
                 const general_id = sessionStorage.getItem('ugn_id')
                 const soldier_id = sessionStorage.getItem('usd_id')
-                console.log(op_soldier_id)
 
                 // If attacker is user's general and defender is opponent soldier
                 if ((sessionStorage.getItem('ugn_id') != null) && (sessionStorage.getItem('usd_id') == null)) {
@@ -120,7 +116,6 @@ $(document).ready(function () {
                     })
                         .then((response1) => response1.json())
                         .then((result1) => {
-                            console.log(result1.message)
                             shot_animation(op_soldier_id, op_soldier, result1)
                             op_attack()
                         })
@@ -135,7 +130,6 @@ $(document).ready(function () {
                     })
                         .then((response1) => response1.json())
                         .then((result1) => {
-                            console.log(result1.message)
                             shot_animation(op_soldier_id, op_soldier, result1)
                             op_attack()
                         })
@@ -164,38 +158,38 @@ const csrftoken = getCookie('csrftoken');
 
 function shot_animation(def_id, def_element, result1) {
     if (result1.message == 'Miss') {
-        document.querySelector(`#ms${def_id}`).innerHTML = 'Miss'
-        document.querySelector(`#ms${def_id}`).className = 'message'
-        document.querySelector(`#ms${def_id}`).style.animationPlayState = 'running'
-        document.querySelector(`#ms${def_id}`).addEventListener('animationend', () => {
+        $(`#ms${def_id}`).html('Miss');
+        $(`#ms${def_id}`).addClass('message');
+        $(`#ms${def_id}`).css('animationPlayState', 'running');
+        $(`#ms${def_id}`).on('animationend', () => {
             $(`#ms${def_id}`).removeClass('message')
-            document.querySelector(`#ms${def_id}`).innerHTML = ''
+            $(`#ms${def_id}`).html('');
         })
     } else if (result1.message == 'Success') {
-        document.querySelector(`#ms${def_id}`).innerHTML = '-1'
-        document.querySelector(`#ms${def_id}`).className = 'message'
-        document.querySelector(`#ms${def_id}`).style.animationPlayState = 'running'
-        document.querySelector(`#ms${def_id}`).addEventListener('animationend', () => {
+        $(`#ms${def_id}`).html('-1');
+        $(`#ms${def_id}`).addClass('message');
+        $(`#ms${def_id}`).css('animationPlayState', 'running');
+        $(`#ms${def_id}`).on('animationend', () => {
             $(`#ms${def_id}`).removeClass('message')
-            document.querySelector(`#ms${def_id}`).innerHTML = ''
+            $(`#ms${def_id}`).html('');
         })
     } else {
-        document.querySelector(`#ms${def_id}`).innerHTML = 'Killed'
-        document.querySelector(`#ms${def_id}`).className = 'message'
-        document.querySelector(`#ms${def_id}`).style.animationPlayState = 'running'
-        document.querySelector(`#ms${def_id}`).addEventListener('animationend', () => {
+        $(`#ms${def_id}`).html('Killed');
+        $(`#ms${def_id}`).addClass('message');
+        $(`#ms${def_id}`).css('animationPlayState', 'running');
+        $(`#ms${def_id}`).on('animationend', () => {
             $(`#ms${def_id}`).removeClass('message')
-            document.querySelector(`#ms${def_id}`).innerHTML = ''
+            $(`#ms${def_id}`).html('');
         })
         $(`#div${def_id}`).addClass('remove');
-        document.querySelector(`#div${def_id}`).style.animationPlayState = 'running'
-        document.querySelector(`#div${def_id}`).addEventListener('animationend', () => { console.log('KILLED') })
+        $(`#div${def_id}`).css('animationPlayState', 'running')
+        $(`#div${def_id}`).on('animationend', () => { $(def_element).css('visibility', 'hidden') })
         if (result1.score_i == 'user') {
             $('#u-score').html(`${result1.score}`);
         } else {
             $('#o-score').html(`${result1.score}`);
         }
-        def_element.style.visibility = 'hidden'
+
     }
 }
 
