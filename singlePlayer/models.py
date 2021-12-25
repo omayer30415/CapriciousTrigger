@@ -25,6 +25,9 @@ class Opponent(models.Model):
     opposed_to = models.OneToOneField(
         User, on_delete=models.SET_NULL, related_name='opponent', null=True)
 
+    def __str__(self):
+        return self.team.name
+
 
 class General(models.Model):
     name = models.CharField(max_length=40)
@@ -45,7 +48,10 @@ class General(models.Model):
                                     related_query_name='generals', related_name='generals', blank=True, null=True)
 
     def __str__(self):
-        if self.commander is None:
+        if self.as_opponent is not None:
+            return f"{self.name} is in {self.as_opponent} side as an enemy."
+
+        elif self.commander is None:
             return f"{self.name} is here by default"
         else:
             return f"{self.name} is a general of {self.commander}"

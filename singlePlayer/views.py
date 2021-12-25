@@ -21,6 +21,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import json
 import random
 from itertools import chain
+from django.db.models import Q
 
 
 class UserForm(forms.Form):
@@ -175,6 +176,8 @@ def game(request):
     user_soldiers = Soldier.objects.filter(commander=user)
     try:
         opponent = Opponent.objects.get(opposed_to=user)
+        op_generals = opponent.generals.all()
+        op_soldiers = opponent.soldiers.all()
     except Opponent.DoesNotExist:
         if team.name == 'Star' or 'Patriot':
             op_list = ['Jungle Warriors', 'Gangstars']
@@ -184,17 +187,13 @@ def game(request):
                 [t.name for t in Team.objects.exclude(name=team.name)])
         op_team = Team.objects.get(name=op)
         opponent = Opponent.objects.create(team=op_team, opposed_to=user)
-    op_generals = opponent.generals.all()
-    if op_generals.count() == 0:
         generals = General.objects.filter(team=opponent.team)
         for general in generals:
             op_general = General.objects.create(
-                name=general.name, as_opponent=opponent, cap_image_url=general.cap_image_url,)
+                name=general.name, as_opponent=opponent, cap_image_url=general.cap_image_url)
             op_general.save()
-    opponent_soldiers = opponent.soldiers.all()
-    if opponent_soldiers.count() == 0:
-        opponent_soldiers = create_soldiers(opponent.team.name, 15)
-        for soldier in opponent_soldiers:
+        op_soldiers = create_soldiers(opponent.team.name, 15)
+        for soldier in op_soldiers:
             soldier.as_opponent = opponent
             soldier.save()
     op_generals = General.objects.filter(as_opponent=opponent)
@@ -438,10 +437,10 @@ def random_attack(request):
         score = Score.objects.get(user=request.user)
         user = User.objects.get(username=request.user)
         opponent = Opponent.objects.get(opposed_to=user)
-        user_generals = user.generals.all()
-        user_soldiers = user.soldiers.all()
-        op_generals = opponent.generals.all()
-        op_soldiers = opponent.soldiers.all()
+        user_generals = user.generals.filter(~Q(life=0))
+        user_soldiers = user.soldiers.filter(~Q(life=0))
+        op_generals = opponent.generals.filter(~Q(life=0))
+        op_soldiers = opponent.soldiers.filter(~Q(life=0))
         uss = list(chain(user_generals, user_soldiers))
         ops = list(chain(op_generals, op_soldiers))
         attacker = random.choice(ops)
@@ -549,6 +548,8 @@ def progress(request):
     user.save()
     score.delete()
     op.delete()
+    op.generals.all().delete()
+    op.soldiers.all().delete()
     return redirect('cabinet')
 
 
