@@ -16,7 +16,7 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view,  permission_classes
 from rest_framework import permissions
-from .source import create_soldiers, dependent_double_event
+from .source import create_soldiers, dependent_double_event, enemy_choosing
 from django.core.exceptions import ObjectDoesNotExist
 import json
 import random
@@ -134,18 +134,10 @@ def cabinet(request):
     if user_generals.count() == 0:
         return redirect('choose')
     else:
-        try:
-            opponent = Opponent.objects.get(opposed_to=user)
-            return render(request, 'game/cabinet.html', {
-                "generals": user_generals,
-                "soldiers": soldiers,
-                "opponent": opponent
-            })
-        except Opponent.DoesNotExist:
-            return render(request, 'game/cabinet.html', {
-                "generals": user_generals,
-                "soldiers": soldiers
-            })
+        return render(request, 'game/cabinet.html', {
+            "generals": user_generals,
+            "soldiers": soldiers
+        })
 
 
 @csrf_protect
@@ -179,12 +171,7 @@ def game(request):
         op_generals = opponent.generals.all()
         op_soldiers = opponent.soldiers.all()
     except Opponent.DoesNotExist:
-        if team.name == 'Star' or 'Patriot':
-            op_list = ['Jungle Warriors', 'Gangstars']
-            op = random.choice(op_list)
-        else:
-            op = random.choice(
-                [t.name for t in Team.objects.exclude(name=team.name)])
+        op = enemy_choosing(team.name)
         op_team = Team.objects.get(name=op)
         opponent = Opponent.objects.create(team=op_team, opposed_to=user)
         generals = General.objects.filter(team=opponent.team)

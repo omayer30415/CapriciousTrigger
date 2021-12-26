@@ -2,6 +2,16 @@ import random
 from .models import Soldier, Team
 
 
+def enemy_choosing(team_name):
+    if (team_name == 'Star') or (team_name == 'Patriot'):
+        op_list = ['Jungle Warriors', 'Gangstars']
+        op = random.choice(op_list)
+    else:
+        op = random.choice(
+            [t.name for t in Team.objects.exclude(name=team_name)])
+    return op
+
+
 def create_soldiers(team_name, amount):
     soldiers = []
     if team_name == 'Star':
