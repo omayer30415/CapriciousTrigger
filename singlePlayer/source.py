@@ -1,5 +1,5 @@
 import random
-from .models import Soldier, Team
+from .models import Soldier, Team, General
 
 
 def enemy_choosing(team_name):
@@ -10,6 +10,18 @@ def enemy_choosing(team_name):
         op = random.choice(
             [t.name for t in Team.objects.exclude(name=team_name)])
     return op
+
+
+def c(user):
+    generals = General.objects.filter(commander=user)
+    generals.delete()
+    soldiers = Soldier.objects.filter(commander=user)
+    soldiers.delete()
+    user.team = None
+    user.money = 10000
+    user.levels = 0
+    user.experience = 0
+    user.save()
 
 
 def create_soldiers(team_name, amount):
