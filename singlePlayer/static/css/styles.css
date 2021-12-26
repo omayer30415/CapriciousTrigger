@@ -64,29 +64,60 @@ a :hover, .anchor {
     object-position: 50% 50%;
   }
   
-  .team_content {
+.team_content {
     display: inline-block;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 5px;
   }
-  label {
+label {
     margin-left: 2%;
   }
   .image_div {
     position: relative;
   }
   
-  .take,
-  .hid {
+.take,
+.hid {
     position: relative;
     margin-bottom: 10px;
     width: 100%;
     text-align: center;
   }
   
-  .team_name {
+.team_name {
     text-align: center;
   }
   .see {
     width: 100%;
   }
+
+.help {
+    position: relative;
+    top: 25%;
+    width: 30px;
+    cursor: pointer;
+    font-size: 30px;
+    float: right;
+    height: 30px;
+}
+
+#title {
+    text-align: center;
+}
+#instr-head {
+    font-size: 24px;
+    text-align: center;
+    font-weight: bolder;
+    color: rgb(158, 32, 158);
+    margin-left: 12%;
+}
+#instr, #instr-head {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+#instr {
+    text-align: justify;
+    color: rgb(158, 32, 158);
+}
+#close_instr {
+    float: right;
+}

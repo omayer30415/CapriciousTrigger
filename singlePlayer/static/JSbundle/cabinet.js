@@ -48,6 +48,7 @@ $(document).ready(function () {
                 })
         });
     })
+
     fetch((`/current_user`))
         .then((response) => response.json())
         .then((user) => sessionStorage.setItem('user', JSON.stringify(user.username)))
