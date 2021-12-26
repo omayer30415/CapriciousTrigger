@@ -16,7 +16,7 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view,  permission_classes
 from rest_framework import permissions
-from .source import create_soldiers, dependent_double_event, enemy_choosing
+from .source import create_soldiers, dependent_double_event, enemy_choosing, c
 from django.core.exceptions import ObjectDoesNotExist
 import json
 import random
@@ -86,15 +86,7 @@ def index(request):
 @login_required
 def choose(request):
     user = User.objects.get(username=request.user)
-    generals = General.objects.filter(commander=user)
-    generals.delete()
-    soldiers = Soldier.objects.filter(commander=user)
-    soldiers.delete()
-    user.team = None
-    user.money = 10000
-    user.levels = 0
-    user.experience = 0
-    user.save()
+    c(user)
     teams = Team.objects.all()
     generals = General.objects.all()
     return render(request, 'singlePlayer/choose.html', {
@@ -107,6 +99,7 @@ def choose(request):
 @login_required
 def new_choose(request, team_id):
     user = User.objects.get(username=request.user)
+    c(user)
     user.team = Team.objects.get(pk=team_id)
     user.save()
     generals = General.objects.filter(team=team_id)
