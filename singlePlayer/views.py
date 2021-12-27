@@ -127,7 +127,7 @@ def cabinet(request):
     if user_generals.count() == 0:
         return redirect('choose')
     else:
-        return render(request, 'game/cabinet.html', {
+        return render(request, 'buildings/promotion_room.html', {
             "generals": user_generals,
             "soldiers": soldiers
         })
@@ -535,7 +535,7 @@ def progress(request):
 
 def shop(request):
     products = Product.objects.all()
-    return render(request, 'game/shop.html', {
+    return render(request, 'buildings/shop.html', {
         "products": products,
     })
 
@@ -570,3 +570,8 @@ def helmet_buy(request, helmet_id):
 
 def show_credits(request):
     return render(request, 'singlePlayer/credits.html')
+
+
+@login_required
+def barrack(request):
+    return render(request, 'buildings/barrack.html')

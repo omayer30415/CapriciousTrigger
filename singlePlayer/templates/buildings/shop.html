@@ -1,14 +1,6 @@
-{% extends 'game/layout.html' %}
+{% extends 'buildings/layout.html' %}
 {% load static %}
-{% block title %}Cabinet{% endblock title %}
 {% block body %}
-
-
-
-
-
-
-
 <div class="container">
     <h2>General Cap</h2><br>
     <div class="row">
@@ -22,7 +14,6 @@
                 <a href="{% url 'cap_buy' product.id %}" class="btn btn-danger">Buy</a>
             </div>
         </div>
-
         {% endif %}
         {% endfor %}
     </div>
