@@ -1,12 +1,9 @@
-{% extends 'game/layout.html' %}
+{% extends 'buildings/layout.html' %}
 {% load static %}
-{% block title %}Cabinet{% endblock title %}
 {% block body %}
 
 <div class="container" id="generals_cabinet">
     <div class='row'>
-
-
     </div>
     <div class="row">
         <div class="col"><br>
@@ -20,9 +17,10 @@
         <div class="col" id="attributes"></div>
         <div class="col"><br><br>
             <ul>
-
-                {% if soldiers %}
                 <h2 class="title">Promotional troops</h2>
+                {% if not soldiers %}
+                <li class="general_attributes">No soldier is eligible for promotion</li>
+                {% else %}
                 {% for soldier in soldiers %}
                 <li class="soldier_ids" id="sd{{ soldier.id }}">Soldier ID: {{ soldier.id }}
                     <br>Killed Soldier: {{ soldier.killed_units }}
@@ -37,22 +35,12 @@
                     <h6>Use the default image url. To do that,right-click on a general's cap image, copy the address of
                         the cap image
                         and paste it.</h6>
-
                     <button class="btn btn-success" id='promote{{ soldier.id }}'
                         data-promotion="{{ soldier.id }}">Promote</button>
                 </form>
-                {% empty %}
-                <li class="general_attributes">No soldier is eligible for promotion</li>
                 {% endfor %}
                 {% endif %}
-
-
-
-
-
-
             </ul>
-
         </div>
         <div class="col">
             <br><br><br><br><br><br>

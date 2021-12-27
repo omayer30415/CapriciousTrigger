@@ -88,6 +88,8 @@ class Product(models.Model):
     price = models.IntegerField()
     category = models.CharField(max_length=20)
     power = models.IntegerField(default=5)
+    team_category = models.ForeignKey(
+        Team, on_delete=models.SET_NULL, related_name='product_category', null=True)
 
     def __str__(self):
         return self.name

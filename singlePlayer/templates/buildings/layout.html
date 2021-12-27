@@ -24,7 +24,7 @@
     {% block script %}
 
     {% endblock script %}
-    <title>{% block title %}{% endblock %}</title>
+    <title>Capricious Trigger</title>
 </head>
 
 <body>
@@ -38,6 +38,18 @@
         {% endfor %}
         {% endif %}
     </div>
+    <nav class="navbar navbar-light" style="background-color: rgb(198, 168, 226);">
+        <a href='#' class='user-attr top_link'
+            style="font-family:'Nanum Gothic', sans-serif;text-decoration: none;">Capricious Trigger</a><br>
+        <span class="user-attr">{{ user }}</span>
+        <span class="user-attr">Team: {{ user.team.name }}</span>
+        <span class="user-attr">Level: {{ user.levels }}</span>
+        <span class="user-attr">Experience: {{ user.experience }}</span>
+        <span class="user-attr">Money: {{ user.money }}</span>
+        <a href="{% url 'logout' %}" class="user-attr top_link" style="text-decoration: none;">Log Out</a>
+
+
+    </nav>
     {% block body %}
     {% endblock %}
 </body>
