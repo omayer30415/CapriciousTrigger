@@ -20,9 +20,11 @@
         <div class="col" id="attributes"></div>
         <div class="col"><br><br>
             <ul>
-
-                {% if soldiers %}
                 <h2 class="title">Promotional troops</h2>
+
+                {% if not soldiers %}
+                <li class="general_attributes">No soldier is eligible for promotion</li>
+                {% else %}
                 {% for soldier in soldiers %}
                 <li class="soldier_ids" id="sd{{ soldier.id }}">Soldier ID: {{ soldier.id }}
                     <br>Killed Soldier: {{ soldier.killed_units }}
@@ -41,8 +43,6 @@
                     <button class="btn btn-success" id='promote{{ soldier.id }}'
                         data-promotion="{{ soldier.id }}">Promote</button>
                 </form>
-                {% empty %}
-                <li class="general_attributes">No soldier is eligible for promotion</li>
                 {% endfor %}
                 {% endif %}
 
