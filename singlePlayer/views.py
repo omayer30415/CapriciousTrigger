@@ -16,12 +16,11 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view,  permission_classes
 from rest_framework import permissions
-from .source import create_soldiers, dependent_double_event, enemy_choosing, c
+from .source import create_soldiers, dependent_double_event
 from django.core.exceptions import ObjectDoesNotExist
 import json
 import random
 from itertools import chain
-from django.db.models import Q
 
 
 class UserForm(forms.Form):
@@ -86,7 +85,15 @@ def index(request):
 @login_required
 def choose(request):
     user = User.objects.get(username=request.user)
-    c(user)
+    generals = General.objects.filter(commander=user)
+    generals.delete()
+    soldiers = Soldier.objects.filter(commander=user)
+    soldiers.delete()
+    user.team = None
+    user.money = 10000
+    user.levels = 0
+    user.experience = 0
+    user.save()
     teams = Team.objects.all()
     generals = General.objects.all()
     return render(request, 'singlePlayer/choose.html', {
@@ -99,13 +106,12 @@ def choose(request):
 @login_required
 def new_choose(request, team_id):
     user = User.objects.get(username=request.user)
-    c(user)
     user.team = Team.objects.get(pk=team_id)
     user.save()
     generals = General.objects.filter(team=team_id)
     for general in generals:
         user_general = General.objects.create(
-            name=general.name, cap_image_url=general.cap_image_url, commander=user, leading_role=general.leading_role)
+            name=general.name, cap_image_url=general.cap_image_url, commander=user)
         user_general.save()
     soldiers = create_soldiers(team_name=user.team.name, amount=20)
     for soldier in soldiers:
@@ -127,10 +133,18 @@ def cabinet(request):
     if user_generals.count() == 0:
         return redirect('choose')
     else:
-        return render(request, 'game/cabinet.html', {
-            "generals": user_generals,
-            "soldiers": soldiers
-        })
+        try:
+            opponent = Opponent.objects.get(opposed_to=user)
+            return render(request, 'game/cabinet.html', {
+                "generals": user_generals,
+                "soldiers": soldiers,
+                "opponent": opponent
+            })
+        except Opponent.DoesNotExist:
+            return render(request, 'game/cabinet.html', {
+                "generals": user_generals,
+                "soldiers": soldiers
+            })
 
 
 @csrf_protect
@@ -142,7 +156,7 @@ def promote(request, soldier_id):
         cap_image_url = data.get('cap_image_url', '')
         user = User.objects.get(username=data.get('user', ''))
         killed_units = data.get('killed_units', '')
-        general = General(name=name,
+        general = General(name=name, team=request.user.team,
                           commander=user, cap_image_url=cap_image_url, killed_units=killed_units)
         general.save()
         soldier = Soldier.objects.get(id=soldier_id, commander=user)
@@ -161,19 +175,26 @@ def game(request):
     user_soldiers = Soldier.objects.filter(commander=user)
     try:
         opponent = Opponent.objects.get(opposed_to=user)
-        op_generals = opponent.generals.all()
-        op_soldiers = opponent.soldiers.all()
     except Opponent.DoesNotExist:
-        op = enemy_choosing(team.name)
+        if team.name == 'Star' or 'Patriot':
+            op_list = ['Jungle Warriors', 'Gangstars']
+            op = random.choice(op_list)
+        else:
+            op = random.choice(
+                [t.name for t in Team.objects.exclude(name=team.name)])
         op_team = Team.objects.get(name=op)
         opponent = Opponent.objects.create(team=op_team, opposed_to=user)
+    op_generals = opponent.generals.all()
+    if op_generals.count() == 0:
         generals = General.objects.filter(team=opponent.team)
         for general in generals:
             op_general = General.objects.create(
-                name=general.name, as_opponent=opponent, cap_image_url=general.cap_image_url)
+                name=general.name, as_opponent=opponent, cap_image_url=general.cap_image_url,)
             op_general.save()
-        op_soldiers = create_soldiers(opponent.team.name, 15)
-        for soldier in op_soldiers:
+    opponent_soldiers = opponent.soldiers.all()
+    if opponent_soldiers.count() == 0:
+        opponent_soldiers = create_soldiers(opponent.team.name, 15)
+        for soldier in opponent_soldiers:
             soldier.as_opponent = opponent
             soldier.save()
     op_generals = General.objects.filter(as_opponent=opponent)
@@ -417,10 +438,10 @@ def random_attack(request):
         score = Score.objects.get(user=request.user)
         user = User.objects.get(username=request.user)
         opponent = Opponent.objects.get(opposed_to=user)
-        user_generals = user.generals.filter(~Q(life=0))
-        user_soldiers = user.soldiers.filter(~Q(life=0))
-        op_generals = opponent.generals.filter(~Q(life=0))
-        op_soldiers = opponent.soldiers.filter(~Q(life=0))
+        user_generals = user.generals.all()
+        user_soldiers = user.soldiers.all()
+        op_generals = opponent.generals.all()
+        op_soldiers = opponent.soldiers.all()
         uss = list(chain(user_generals, user_soldiers))
         ops = list(chain(op_generals, op_soldiers))
         attacker = random.choice(ops)
@@ -528,8 +549,6 @@ def progress(request):
     user.save()
     score.delete()
     op.delete()
-    op.generals.all().delete()
-    op.soldiers.all().delete()
     return redirect('cabinet')
 
 
@@ -566,7 +585,3 @@ def helmet_buy(request, helmet_id):
         user.save()
         print('soldiers')
     return redirect('cabinet')
-
-
-def show_credits(request):
-    return render(request, 'singlePlayer/credits.html')

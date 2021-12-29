@@ -1,14 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    $('#c_instr').click(function () {
-        $('#choose_instr').css('display', 'inline-block');
-        $(this).hide();
-        $('#close_instr').click(function () {
-            $('#choose_instr').hide()
-            $('#c_instr').css('display', 'inline-block')
-        });
-
-    });
-
     // See the generals or hide generals list 
     document.querySelectorAll('.see').forEach((see) => {
         $(see).click(function () {
@@ -50,12 +40,3 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 })
-function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
-}
-
-function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
-}

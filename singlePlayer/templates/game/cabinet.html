@@ -24,7 +24,7 @@
                 {% if soldiers %}
                 <h2 class="title">Promotional troops</h2>
                 {% for soldier in soldiers %}
-                <li class="soldier_ids" id="sd{{ soldier.id }}">Soldier ID: {{ soldier.id }}
+                <li class="soldier_ids">Soldier ID: {{ soldier.id }}
                     <br>Killed Soldier: {{ soldier.killed_units }}
                     <button class="btn btn-success promote" data-promote="{{ soldier.id }}">Give promotion</button>
                 </li>
@@ -56,7 +56,10 @@
         </div>
         <div class="col">
             <br><br><br><br><br><br>
-            <a href="{% url 'game' %}" class="btn btn-danger" id="start">Play</a>
+            <a href="{% url 'game' %}" class="btn btn-danger" id="start">Start Game</a>
+            {% if opponent %}
+            <a href="{% url 'con' %}" class="btn btn-danger" id="con">Continue</a>
+            {% endif %}
             <a href="{% url 'shop' %}" class="btn btn-success" id="shop">Go to Shop</a>
         </div>
         <br><br>
