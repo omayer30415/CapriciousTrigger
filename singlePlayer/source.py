@@ -31,7 +31,6 @@ def create_soldiers(team_name, amount):
             team = Team.objects.get(name=team_name)
             soldier = Soldier.objects.create(
                 team=team, helmet_image_url='http://clipart-library.com/img1/1198114.jpg')
-
             soldiers.append(soldier)
         return soldiers
     if team_name == 'Patriot':
@@ -39,7 +38,6 @@ def create_soldiers(team_name, amount):
             team = Team.objects.get(name=team_name)
             soldier = Soldier.objects.create(
                 team=team, helmet_image_url='http://clipart-library.com/img/1822058.jpg')
-
             soldiers.append(soldier)
         return soldiers
     if team_name == 'Jungle Warriors':
@@ -47,7 +45,6 @@ def create_soldiers(team_name, amount):
             team = Team.objects.get(name=team_name)
             soldier = Soldier.objects.create(
                 team=team, helmet_image_url='http://clipart-library.com/img/1207060.gif')
-
             soldiers.append(soldier)
         return soldiers
     if team_name == 'Gangstars':
@@ -55,7 +52,6 @@ def create_soldiers(team_name, amount):
             team = Team.objects.get(name=team_name)
             soldier = Soldier.objects.create(
                 team=team, helmet_image_url='http://clipart-library.com/data_images/37079.jpg')
-
             soldiers.append(soldier)
         return soldiers
     else:

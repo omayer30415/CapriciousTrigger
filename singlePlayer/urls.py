@@ -17,14 +17,8 @@ urlpatterns = [
     path('progress', views.progress, name='progress'),
     path('shop', views.shop, name='shop'),
 
-
-    # rest framework views
-    path('rest_api/user', views.UserView.as_view(), name='user_view'),
-    path('rest_api/generals', views.GeneralView.as_view(), name='generals_view'),
-
     # API
     path('current_user', views.current_user, name='current_user'),
-    path('api/generals/<int:pk>', views.general_detail, name='general_detail'),
     path('api/promote/<int:soldier_id>', views.promote, name='promote'),
     path('api/game/gs/<int:general_id>/<int:soldier_id>',
          views.general_vs_soldier, name='general_vs_soldier'),

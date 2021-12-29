@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'capriciousTrigger.urls'
+ROOT_URLCONF = 'capstone.urls'
 
 TEMPLATES = [
     {
@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'capriciousTrigger.wsgi.application'
+WSGI_APPLICATION = 'capstone.wsgi.application'
 
 
 # Database

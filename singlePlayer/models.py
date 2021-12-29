@@ -26,7 +26,7 @@ class Opponent(models.Model):
         User, on_delete=models.SET_NULL, related_name='opponent', null=True)
 
     def __str__(self):
-        return self.team.name
+        self.team.name
 
 
 class General(models.Model):

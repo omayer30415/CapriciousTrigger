@@ -48,7 +48,6 @@ $(document).ready(function () {
                 })
         });
     })
-
     fetch((`/current_user`))
         .then((response) => response.json())
         .then((user) => sessionStorage.setItem('user', JSON.stringify(user.username)))
@@ -104,4 +103,3 @@ function getCookie(name) {
     return cookieValue;
 }
 const csrftoken = getCookie('csrftoken');
-

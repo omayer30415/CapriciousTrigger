@@ -1,5 +1,5 @@
 {% extends 'singlePlayer/layout.html' %}
-{% block title %}Capricious Trigger{% endblock %}
+{% block title %}Capstone{% endblock %}
 {% load static %}
 {% block body %}
 <div class="container">
@@ -7,7 +7,7 @@
         <div class="col-sm">
         </div>
         <div class="col-sm">
-            <h1 class="headers game_head">Capricious Trigger</h1>
+            <h1 class="headers game_head">Capstone</h1>
             <div class="main">
                 {% if user.is_authenticated %}
 
@@ -23,7 +23,6 @@
                 <a href="{% url 'credits' %}" style="text-decoration: none;">
                     <h4 class=" game_options">Credits</h4>
                 </a>
-
                 <a href="{% url 'logout' %}" style="text-decoration: none;">
                     <h4 class="game_options">Sign Out</h4>
                 </a>

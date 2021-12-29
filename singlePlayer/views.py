@@ -11,8 +11,7 @@ from django.http import JsonResponse, HttpResponse,  Http404, HttpRequest
 from rest_framework.views import APIView
 from rest_framework import generics, viewsets, status
 from rest_framework.response import Response
-from django_filters.rest_framework import DjangoFilterBackend
-from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view,  permission_classes
 from rest_framework import permissions
@@ -222,70 +221,6 @@ def fav(request):
 def current_user(request):
     serializer = UserSerializer(request.user)
     return Response(serializer.data)
-
-
-@permission_classes((permissions.IsAdminUser,))
-class UserView(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    filter_backends = [DjangoFilterBackend]
-    filter_fields = ('username',)
-
-
-@permission_classes((permissions.IsAdminUser,))
-class GeneralView(generics.ListAPIView):
-    queryset = General.objects.all()
-    serializer_class = GeneralSerializer
-    filter_backends = [DjangoFilterBackend]
-    filter_fields = ('team', 'commander')
-
-
-@api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes((permissions.IsAuthenticated,))
-def general_detail(request, pk):
-    try:
-        general = General.objects.get(pk=pk, commander=request.user)
-    except General.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'GET':
-        serializer = GeneralSerializer(general)
-        return Response(serializer.data)
-
-    elif request.method == 'PUT':
-        serializer = GeneralSerializer(general, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    elif request.method == 'DELETE':
-        general.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-@api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes((permissions.IsAuthenticated,))
-def soldier_detail(request, pk):
-    try:
-        soldier = Soldier.objects.get(pk=pk, commander=request.user)
-    except Soldier.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'GET':
-        serializer = SoldierSerializer(soldier)
-        return Response(serializer.data)
-
-    elif request.method == 'PUT':
-        serializer = SoldierSerializer(soldier, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    elif request.method == 'DELETE':
-        soldier.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @csrf_protect
@@ -550,7 +485,6 @@ def cap_buy(request, cap_id):
         general.save()
         user.money -= product.price
         user.save()
-        print('generals')
     return redirect('cabinet')
 
 
@@ -564,7 +498,6 @@ def helmet_buy(request, helmet_id):
         soldier.save()
         user.money -= product.price
         user.save()
-        print('soldiers')
     return redirect('cabinet')
 
 

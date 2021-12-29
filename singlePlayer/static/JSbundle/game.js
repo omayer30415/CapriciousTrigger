@@ -27,13 +27,13 @@ $(document).ready(function () {
             $(general).addClass('selected');
             const g_id = this.dataset.general
             sessionStorage.setItem('ugn_id', g_id)
-            ///Pop-over needed
+
 
 
         });
     })
 
-    // Is user selects on any of his soldier
+    // If user selects on any of his soldier
     document.querySelectorAll('.user-soldiers-photo').forEach((soldier) => {
         $(soldier).click(function () {
             document.querySelectorAll('.army').forEach((a) => {
@@ -44,7 +44,7 @@ $(document).ready(function () {
             $(soldier).addClass('selected');
             const s_id = this.dataset.soldier
             sessionStorage.setItem('usd_id', s_id)
-            ///Pop-over needed
+
 
 
         });
@@ -62,6 +62,7 @@ $(document).ready(function () {
                 sessionStorage.setItem('df_id', op_general_id)
                 const general_id = sessionStorage.getItem('ugn_id')
                 const soldier_id = sessionStorage.getItem('usd_id')
+
 
                 // If the attacker is user's general and defender is opponent general
                 if ((sessionStorage.getItem('ugn_id') != null) && (sessionStorage.getItem('usd_id') == null)) {
@@ -189,7 +190,7 @@ function shot_animation(def_id, def_element, result1) {
         } else {
             $('#o-score').html(`${result1.score}`);
         }
-
+        def_element.style.visibility = 'hidden'
     }
 }
 

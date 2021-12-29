@@ -62,19 +62,19 @@ a :hover, .anchor {
     margin: 2%;
     object-fit: scale-down;
     object-position: 50% 50%;
-  }
+}
   
 .team_content {
     display: inline-block;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-  }
+}
 label {
     margin-left: 2%;
-  }
-  .image_div {
+}
+.image_div {
     position: relative;
-  }
+}
   
 .take,
 .hid {
@@ -82,16 +82,17 @@ label {
     margin-bottom: 10px;
     width: 100%;
     text-align: center;
-  }
+}
   
 .team_name {
     text-align: center;
-  }
-  .see {
+}
+.see {
     width: 100%;
-  }
+}
 
-.help {
+
+  .help {
     position: relative;
     top: 25%;
     width: 30px;
@@ -120,4 +121,5 @@ label {
 }
 #close_instr {
     float: right;
-}
+} 
+

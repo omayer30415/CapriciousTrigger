@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+    // See instructions
     $('#c_instr').click(function () {
         $('#choose_instr').css('display', 'inline-block');
         $(this).hide();
@@ -50,12 +52,3 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 })
-function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
-}
-
-function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
-}
