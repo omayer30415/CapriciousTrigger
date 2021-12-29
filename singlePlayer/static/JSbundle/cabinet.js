@@ -78,6 +78,8 @@ $(document).ready(function () {
                         li.dataset.general = `${result.id}`
                         li.innerHTML = result.name
                         $('#generals').append(li);
+                        $(`${soldier}`).remove();
+                        $(`#sd${soldier_id}`).remove();
                     })
             });
         });

@@ -8,6 +8,7 @@ urlpatterns = [
     path('logout', views.logout_user, name='logout'),
     path('register', views.register, name='register'),
     path('choose', views.choose, name="choose"),
+    path('credits', views.show_credits, name='credits'),
     path('cabinet', views.cabinet, name='cabinet'),
     path('new_choose/<int:team_id>', views.new_choose, name='new_choose'),
     path('game', views.game, name='game'),
@@ -16,14 +17,8 @@ urlpatterns = [
     path('progress', views.progress, name='progress'),
     path('shop', views.shop, name='shop'),
 
-
-    # rest framework views
-    path('rest_api/user', views.UserView.as_view(), name='user_view'),
-    path('rest_api/generals', views.GeneralView.as_view(), name='generals_view'),
-
     # API
     path('current_user', views.current_user, name='current_user'),
-    path('api/generals/<int:pk>', views.general_detail, name='general_detail'),
     path('api/promote/<int:soldier_id>', views.promote, name='promote'),
     path('api/game/gs/<int:general_id>/<int:soldier_id>',
          views.general_vs_soldier, name='general_vs_soldier'),

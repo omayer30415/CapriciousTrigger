@@ -1,4 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+    // See instructions
+    $('#c_instr').click(function () {
+        $('#choose_instr').css('display', 'inline-block');
+        $(this).hide();
+        $('#close_instr').click(function () {
+            $('#choose_instr').hide()
+            $('#c_instr').css('display', 'inline-block')
+        });
+
+    });
+
     // See the generals or hide generals list 
     document.querySelectorAll('.see').forEach((see) => {
         $(see).click(function () {

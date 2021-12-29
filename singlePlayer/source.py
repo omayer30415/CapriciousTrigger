@@ -1,5 +1,27 @@
 import random
-from .models import Soldier, Team
+from .models import Soldier, Team, General
+
+
+def enemy_choosing(team_name):
+    if (team_name == 'Star') or (team_name == 'Patriot'):
+        op_list = ['Jungle Warriors', 'Gangstars']
+        op = random.choice(op_list)
+    else:
+        op = random.choice(
+            [t.name for t in Team.objects.exclude(name=team_name)])
+    return op
+
+
+def c(user):
+    generals = General.objects.filter(commander=user)
+    generals.delete()
+    soldiers = Soldier.objects.filter(commander=user)
+    soldiers.delete()
+    user.team = None
+    user.money = 10000
+    user.levels = 0
+    user.experience = 0
+    user.save()
 
 
 def create_soldiers(team_name, amount):
@@ -9,7 +31,6 @@ def create_soldiers(team_name, amount):
             team = Team.objects.get(name=team_name)
             soldier = Soldier.objects.create(
                 team=team, helmet_image_url='http://clipart-library.com/img1/1198114.jpg')
-
             soldiers.append(soldier)
         return soldiers
     if team_name == 'Patriot':
@@ -17,7 +38,6 @@ def create_soldiers(team_name, amount):
             team = Team.objects.get(name=team_name)
             soldier = Soldier.objects.create(
                 team=team, helmet_image_url='http://clipart-library.com/img/1822058.jpg')
-
             soldiers.append(soldier)
         return soldiers
     if team_name == 'Jungle Warriors':
@@ -25,7 +45,6 @@ def create_soldiers(team_name, amount):
             team = Team.objects.get(name=team_name)
             soldier = Soldier.objects.create(
                 team=team, helmet_image_url='http://clipart-library.com/img/1207060.gif')
-
             soldiers.append(soldier)
         return soldiers
     if team_name == 'Gangstars':
@@ -33,7 +52,6 @@ def create_soldiers(team_name, amount):
             team = Team.objects.get(name=team_name)
             soldier = Soldier.objects.create(
                 team=team, helmet_image_url='http://clipart-library.com/data_images/37079.jpg')
-
             soldiers.append(soldier)
         return soldiers
     else:
